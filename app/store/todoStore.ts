@@ -1,20 +1,30 @@
 import { create } from "zustand";
 
+interface todoList {
+  id?: number;
+  title?: string;
+  isComplete?: boolean;
+}
+
 interface TodoState {
   isOpen: Boolean;
-  todo: {
-    title?: String;
-    isComplete?: Boolean;
-  };
-  addTodo: () => void;
-  removeTodo: () => void;
+  todos: todoList[];
+  toggleIsOpen: () => void;
+  addTodo: (id: number, task: string) => void;
+  removeTodo: (id: number) => void;
 }
 
 const useTodoStore = create<TodoState>((set) => ({
-  todo: {},
+  todos: [{ id: 1, title: "Eat food", isComplete: true }],
   isOpen: false,
-  addTodo: () => set(() => ({ todo: { title: "food", isComplete: true } })),
-  removeTodo: () => set({ todo: {} }),
+  toggleIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
+  addTodo: (id: number, task: string) => {
+    set((state) => ({
+      todos: [...state.todos, { id, title: task, isComplete: false }],
+    }));
+  },
+  removeTodo: (id: number) =>
+    set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id) })),
 }));
 
 export default useTodoStore;
