@@ -10,11 +10,12 @@ interface TimeState {
   };
   toggleRunning: () => void;
   changeMode: (mode: string) => void;
+  nextMode: () => void;
 }
 
 const useTimeStore = create<TimeState>((set) => ({
   mode: "focus",
-  countDown: 1500, //1500
+  countDown: 10, //1500
   isRunning: false,
   timer: {},
   toggleRunning: () =>
@@ -31,6 +32,9 @@ const useTimeStore = create<TimeState>((set) => ({
         set({ mode: mode, countDown: 500, isRunning: false });
         break;
     }
+  },
+  nextMode: () => {
+    //code
   },
 }));
 

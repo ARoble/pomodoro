@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Rubik } from "next/font/google";
+import ClientProvider from "../app/context/clientProvider";
+
 import "./globals.css";
 import Todo from "./components/Todos";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fowcas",
@@ -15,10 +17,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const { data: session } = useSession();
   return (
     <html lang="en">
       <body className={`${inter.className} flex justify-center min-h-screen `}>
-        {children}
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );

@@ -1,9 +1,9 @@
 "use client";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import useTodoStore from "../store/todoStore";
-import { useState } from "react";
+import React, { useState } from "react";
 
-function Add() {
+function Add(): React.JSX.Element {
   const [task, setTask] = useState("");
   const { toggleIsOpen, addTodo } = useTodoStore((state) => state);
 
