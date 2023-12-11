@@ -3,8 +3,15 @@ import { PiBrain } from "react-icons/pi";
 import { FiCoffee } from "react-icons/fi";
 import { IoFastFoodOutline } from "react-icons/io5";
 import useTimeStore from "../store/timeStore";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 export default function Modes() {
   const { mode, changeMode } = useTimeStore((state: any) => state);
+  const { data: session, status } = useSession();
+  useEffect(() => {
+    console.log(session);
+    // console.log(status);
+  }, [status]);
   return (
     <div className="flex items-center ">
       <button

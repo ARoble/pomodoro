@@ -17,7 +17,7 @@ function Page() {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => signIn("credentials", data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => signIn("signup", data);
   const { data: session, status } = useSession();
 
   if (status === "authenticated") redirect("/");
