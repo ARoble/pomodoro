@@ -19,17 +19,22 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account?.provider === "google") {
-        //TODO: CHECK IF ALREADY EXISTS
-        const { email, name, picture } = profile;
         try {
+          const { email, name, picture } = profile;
+          const existingUser = await prisma.user.findFirst({
+            where: { email },
+          });
+          if (existingUser) {
+            return true;
+          }
           const newUser = await prisma.user.create({
             data: { name, email, image: picture },
           });
+          return true;
         } catch (e) {
           console.log(e);
         }
       }
-      return true; // Do different verification for other providers that don't have `email_verified`
     },
     async session({ session, user, token }) {
       const sessionUser = await prisma.user.findFirst({

@@ -2,7 +2,7 @@ import { GoTrash } from "react-icons/go";
 import useTodoStore from "../store/todoStore";
 // import { TiTick, TiTimes } from "react-icons/ti";
 interface TodoD {
-  todo: { id: number; title: string; isComplete: boolean };
+  todo: { id: number; todo: string; isComplete: boolean };
 }
 
 export default function Todo({ todo }: TodoD) {
@@ -17,7 +17,7 @@ export default function Todo({ todo }: TodoD) {
     >
       <div className="flex items-center" onClick={() => isComplete(todo.id)}>
         <h1 className={`${todo.isComplete ? "line-through" : ""}`}>
-          {todo.title}
+          {todo.todo}
         </h1>
       </div>
       <div>

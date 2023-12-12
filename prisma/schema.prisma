@@ -17,11 +17,13 @@ model User{
   email String @unique
   password String?
   image String @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  Todos Todos[]
 }
 
-model Todo{
+model Todos{
    id Int @id @default(autoincrement())
    todo String
-   isComplete Boolean
-
+   isComplete Boolean @default(false)
+   user User @relation(fields: [userId], references: [id])
+   userId Int
 }

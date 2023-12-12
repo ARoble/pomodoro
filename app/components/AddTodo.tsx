@@ -2,17 +2,25 @@
 import { IoMdAddCircleOutline } from "react-icons/io";
 import useTodoStore from "../store/todoStore";
 import React, { useState } from "react";
-
+import { createTodo } from "../lib/todo";
+import { useSession } from "next-auth/react";
 function Add(): React.JSX.Element {
   const [task, setTask] = useState("");
   const { toggleIsOpen, addTodo } = useTodoStore((state) => state);
+  const { data: session, status } = useSession();
 
-  const handleOnSubmit = (): void => {
+  const handleOnSubmit = async (): Promise<void> => {
     //code
+    //TODO: REMOVE ID
     const id = Date.now();
-    addTodo(id, task);
-    setTask("");
-    toggleIsOpen();
+    try {
+      const todo = await createTodo(session, id, task); // ✅
+      addTodo(todo);
+      setTask("");
+      toggleIsOpen();
+    } catch (e) {
+      console.log("here");
+    }
   };
   return (
     <div className="mt-3 rounded-lg bg-white">
