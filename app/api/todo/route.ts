@@ -21,8 +21,36 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(todo);
   } catch (e) {
-    console.log(e);
+    return NextResponse.json({ error: "someghing" });
+  }
+}
 
+export async function DELETE(req: Request) {
+  try {
+    const { todo } = await req.json();
+
+    await prisma.todos.delete({ where: { id: todo } });
+    // const todo = await prisma.todos.create({
+    //   data: { todo: task, userId: userId },
+    // });
+    return NextResponse.json({ message: "Deleted todo" });
+  } catch (e) {
+    return NextResponse.json({ error: "someghing" });
+  }
+}
+
+export async function PUT(req: Request) {
+  try {
+    const { todoId, completed } = await req.json();
+
+    await prisma.todos.update({
+      where: { id: todoId },
+      data: {
+        isComplete: completed,
+      },
+    });
+    return NextResponse.json({ message: "Editied todo" });
+  } catch (e) {
     return NextResponse.json({ error: "someghing" });
   }
 }

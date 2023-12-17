@@ -10,14 +10,9 @@ function Add(): React.JSX.Element {
   const { data: session, status } = useSession();
 
   const handleOnSubmit = async (): Promise<void> => {
-    //code
-    //TODO: REMOVE ID
-    const id = Date.now();
     try {
-      const todo = await createTodo(session, id, task); // ✅
-      addTodo(todo);
+      addTodo(session, task);
       setTask("");
-      toggleIsOpen();
     } catch (e) {
       console.log("here");
     }

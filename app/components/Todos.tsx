@@ -1,9 +1,20 @@
 "use client";
 import Todo from "./Todo";
 import useTodoStore from "../store/todoStore";
+import { useEffect } from "react";
+import { getTodos } from "../lib/todo";
 
 export default function Todos() {
-  const { todos } = useTodoStore((state) => state);
+  const { todos, initTodos } = useTodoStore((state) => state);
+
+  async function fetchTodos() {
+    const { todos } = await getTodos();
+    initTodos(todos);
+  }
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   if (todos.length == 0) return;
   return (
